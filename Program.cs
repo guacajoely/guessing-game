@@ -19,7 +19,7 @@ static void GuessANumber()
 {
 
     //declare secret number and the users attempt count
-    int secretNumber = 42;
+    int secretNumber = new Random().Next(1, 10);
     int attemptCount = 4;
     
     //game runs until 0 attempts remaining
@@ -29,15 +29,15 @@ static void GuessANumber()
         //initial question
         Console.WriteLine();
         Console.WriteLine("Guess the secret number...");
-        Console.WriteLine("(between 1 and 100)");
+        Console.WriteLine("(between 1 and 10)");
         Console.WriteLine();
-        Console.Write("your guess:");
+        Console.Write($"your guess:");
 
         //grab user input
         string userInput = Console.ReadLine().ToLower(); 
 
         //quit returns out of while loop
-        if(userInput != "quit")
+        if(userInput == "quit")
         {
             return;
         }
@@ -46,7 +46,7 @@ static void GuessANumber()
         int parsedInput = int.Parse(userInput);
 
         //check that guess is valid
-        if (parsedInput > 0 && parsedInput < 101) 
+        if (parsedInput > 0 && parsedInput < 11) 
         {
             //If user guesses correctly
             if (parsedInput == secretNumber) 
@@ -64,7 +64,7 @@ static void GuessANumber()
 
             //Inform user of no attempts remaining
             if(attemptCount == 0){
-                 Console.WriteLine($"Sorry! You are out of attempts.");
+                 Console.WriteLine($"Sorry! You are out of attempts. The secret number was... {secretNumber}");
             }
             }
         }
