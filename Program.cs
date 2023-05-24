@@ -61,6 +61,14 @@ static void GuessANumber()
             attemptCount--;
             Console.WriteLine();
             Console.WriteLine($"{userInput} is incorrect. You have {attemptCount} attempts remaining.");
+            
+            if(parsedInput > secretNumber){
+                 Console.WriteLine("(pssst... try guessing LOWER!");
+            }
+
+            else{
+                 Console.WriteLine("   pssst... try guessing HIGHER!");
+            }
 
             //Inform user of no attempts remaining
             if(attemptCount == 0){
