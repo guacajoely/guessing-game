@@ -4,22 +4,18 @@ Main();
 
 void Main()
 {
+    Console.WriteLine();
+    Console.WriteLine("-----------------------------------------------");
+    Console.WriteLine("              Let's play a game :)             ");
+    Console.WriteLine("-----------------------------------------------");
+    Console.WriteLine();
 
-Console.WriteLine();
-Console.WriteLine("-----------------------------------------------");
-Console.WriteLine("              Let's play a game :)             ");
-Console.WriteLine("-----------------------------------------------");
-Console.WriteLine();
-
-GuessANumber();
-
+    GuessANumber();
 }
 
 static void GuessANumber()
 {
-
     //Prompt the user for a difficulty level before they are prompted to guess the number.
-
     Console.WriteLine("(1)easy  (2)medium  (3)hard  (4)cheater");
     Console.WriteLine();
     Console.Write("Choose your difficulty:");
@@ -27,27 +23,31 @@ static void GuessANumber()
     //declare attemptCount
     int attemptCount;
 
-    string userDifficulty = Console.ReadLine().ToLower(); 
+    //declare readline dependant variables to remove null references
+    string userDifficulty;
+    string userInput;
+
+    userDifficulty = Console.ReadLine().ToLower();
 
     //declare parsedDifficulty and tryParse
     int parsedDifficulty;
     bool successfulParse = int.TryParse(userDifficulty, out parsedDifficulty);
 
     //make sure difficulty selection is valid
-    if(successfulParse && parsedDifficulty > 0 && parsedDifficulty < 5)
+    if (successfulParse && parsedDifficulty > 0 && parsedDifficulty < 5)
     {
         // Easy gives user eight guesses, Medium gives user six guesses, Hard gives user four guesses.
         // Cheater difficulty gives user 9001 guesses lol
-        attemptCount = parsedDifficulty == 1 ? 8 : 
-        (parsedDifficulty == 2 ? 6 :
-        (parsedDifficulty == 3 ? 8 : 9001));
+        attemptCount =
+            parsedDifficulty == 1
+                ? 8
+                : (parsedDifficulty == 2 ? 6 : (parsedDifficulty == 3 ? 8 : 9001));
 
         //declare secret number and the users attempt count
         int secretNumber = new Random().Next(1, 100);
-        
+
         //game runs until 0 attempts remaining
         while (attemptCount > 0)
-
         {
             //Primary Question
             Console.WriteLine();
@@ -57,10 +57,10 @@ static void GuessANumber()
             Console.Write($"your guess:");
 
             //grab user input
-            string userInput = Console.ReadLine().ToLower(); 
+            userInput = Console.ReadLine().ToLower();
 
             //quit returns out of while loop
-            if(userInput == "quit")
+            if (userInput == "quit")
             {
                 return;
             }
@@ -70,37 +70,43 @@ static void GuessANumber()
             bool anotherSuccessfulParse = int.TryParse(userInput, out parsedInput);
 
             //check that guess is valid
-            if (anotherSuccessfulParse && parsedInput > 0 && parsedInput < 101) 
+            if (anotherSuccessfulParse && parsedInput > 0 && parsedInput < 101)
             {
                 //If user guesses correctly
-                if (parsedInput == secretNumber) 
+                if (parsedInput == secretNumber)
                 {
-                    Console.WriteLine($"CONGRATULATIONS! You guessed the secret number! ({userInput}) ");
+                    Console.WriteLine(
+                        $"CONGRATULATIONS! You guessed the secret number! ({userInput}) "
+                    );
                     break;
                 }
-
                 //Otherwise, user is wrong.
                 else
                 {
-                attemptCount--;
-                Console.WriteLine();
-                Console.WriteLine($"{userInput} is incorrect. You have {attemptCount} attempts remaining.");
-                
-                if(parsedInput > secretNumber){
-                    Console.WriteLine("(pssst... try guessing LOWER!");
-                }
+                    attemptCount--;
+                    Console.WriteLine();
+                    Console.WriteLine(
+                        $"{userInput} is incorrect. You have {attemptCount} attempts remaining."
+                    );
 
-                else{
-                    Console.WriteLine("   pssst... try guessing HIGHER!");
-                }
+                    if (parsedInput > secretNumber)
+                    {
+                        Console.WriteLine("(pssst... try guessing LOWER!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("   pssst... try guessing HIGHER!");
+                    }
 
-                //Inform user of no attempts remaining
-                if(attemptCount == 0){
-                    Console.WriteLine($"Sorry! You are out of attempts. The secret number was... {secretNumber}");
-                }
+                    //Inform user of no attempts remaining
+                    if (attemptCount == 0)
+                    {
+                        Console.WriteLine(
+                            $"Sorry! You are out of attempts. The secret number was... {secretNumber}"
+                        );
+                    }
                 }
             }
-
             //invalid response returns messsage and quit instructions
             else
             {
@@ -124,13 +130,11 @@ static void GuessANumber()
         {
             GuessANumber();
         }
-
         else
         {
             return;
         }
     }
-
     //if difficulty selection not valid just relaunch game
     else
     {
@@ -138,6 +142,4 @@ static void GuessANumber()
         Console.WriteLine("Please enter a valid difficulty between 1 and 4");
         GuessANumber();
     }
-
-
 }
