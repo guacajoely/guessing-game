@@ -20,20 +20,23 @@ static void GuessANumber()
 
     //Prompt the user for a difficulty level before they are prompted to guess the number.
 
-    Console.WriteLine("(1)easy  (2)medium  (3)hard");
+    Console.WriteLine("(1)easy  (2)medium  (3)hard  (4)cheater");
     Console.WriteLine();
     Console.Write("Choose your difficulty:");
 
-    int attemptCount = 9000;
+    int attemptCount = 8;
 
     string userDifficulty = Console.ReadLine().ToLower(); 
     int parsedDifficulty = int.Parse(userDifficulty);
 
     //make sure difficulty selection is valid
-    if(parsedDifficulty > 0 && parsedDifficulty < 4)
+    if(parsedDifficulty > 0 && parsedDifficulty < 5)
     {
         // Easy gives user eight guesses, Medium gives user six guesses, Hard gives user four guesses.
-        attemptCount = parsedDifficulty == 1 ? 8 : (parsedDifficulty == 2 ? 6 : 4);
+        // Cheater difficulty gives user 9001 guesses lol
+        attemptCount = parsedDifficulty == 1 ? 8 : 
+        (parsedDifficulty == 2 ? 6 :
+        (parsedDifficulty == 3 ? 8 : 9001));
 
         //declare secret number and the users attempt count
         int secretNumber = new Random().Next(1, 100);
