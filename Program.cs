@@ -18,46 +18,83 @@ GuessANumber();
 static void GuessANumber()
 {
 
+    //declare secret number and the users attempt count
     int secretNumber = 42;
     int attemptCount = 4;
     
-    Console.WriteLine();
-    Console.WriteLine("Guess the secret number...");
-    Console.WriteLine("(between 1 and 100)");
-    Console.WriteLine();
-    Console.Write("your guess:");
+    //game runs until 0 attempts remaining
+    while (attemptCount > 0)
 
-    string userInput = Console.ReadLine().ToLower(); // Read the user's input
-    int parsedInput = int.Parse(userInput);
-
-    if (parsedInput > 0 && parsedInput < 101) // Validate and parse the user's choice
     {
+        //initial question
+        Console.WriteLine();
+        Console.WriteLine("Guess the secret number...");
+        Console.WriteLine("(between 1 and 100)");
+        Console.WriteLine();
+        Console.Write("your guess:");
 
-        if (parsedInput == secretNumber) // Validate and parse the user's choice
+        //grab user input
+        string userInput = Console.ReadLine().ToLower(); 
+
+        //quit returns out of while loop
+        if(userInput != "quit")
         {
-            Console.WriteLine($"CONGRATULATIONS! You guessed the secret number! ({userInput}) ");
+            return;
         }
 
+        //parse user input into integer
+        int parsedInput = int.Parse(userInput);
+
+        //check that guess is valid
+        if (parsedInput > 0 && parsedInput < 101) 
+        {
+            //If user guesses correctly
+            if (parsedInput == secretNumber) 
+            {
+                Console.WriteLine($"CONGRATULATIONS! You guessed the secret number! ({userInput}) ");
+                break;
+            }
+
+            //Otherwise, user is wrong.
+            else
+            {
+            attemptCount--;
+            Console.WriteLine();
+            Console.WriteLine($"{userInput} is incorrect. You have {attemptCount} attempts remaining.");
+
+            //Inform user of no attempts remaining
+            if(attemptCount == 0){
+                 Console.WriteLine($"Sorry! You are out of attempts.");
+            }
+            }
+        }
+
+        //invalid response returns messsage and quit instructions
         else
         {
-        attemptCount--;
-        Console.WriteLine();
-        Console.WriteLine($@"Sorry, {userInput} is incorrect.
-        You have {attemptCount} attempts remaining.");
-        GuessANumber();
+            Console.WriteLine();
+            Console.WriteLine("Please enter a valid response or 'QUIT' to end.");
         }
     }
 
-    else if(userInput.ToLower() == "quit")
+    //once game ending prompts play again question
+    Console.WriteLine();
+    Console.Write($"Play Again? (Y/N):");
+    string answer = Console.ReadLine().ToLower();
+
+    while (answer != "y" && answer != "n")
     {
-       return;
+        Console.Write($"Play Again? (Y/N):");
+        answer = Console.ReadLine().ToLower();
+    }
+
+    if (answer == "y")
+    {
+        GuessANumber();
     }
 
     else
     {
-        Console.WriteLine();
-        Console.WriteLine("Please enter a valid response or 'QUIT' to end."); // Display an error message for an invalid choice
-        GuessANumber();
+        return;
     }
-
 }
