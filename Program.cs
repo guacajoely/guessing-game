@@ -24,13 +24,17 @@ static void GuessANumber()
     Console.WriteLine();
     Console.Write("Choose your difficulty:");
 
-    int attemptCount = 8;
+    //declare attemptCount
+    int attemptCount;
 
     string userDifficulty = Console.ReadLine().ToLower(); 
-    int parsedDifficulty = int.Parse(userDifficulty);
+
+    //declare parsedDifficulty and tryParse
+    int parsedDifficulty;
+    bool successfulParse = int.TryParse(userDifficulty, out parsedDifficulty);
 
     //make sure difficulty selection is valid
-    if(parsedDifficulty > 0 && parsedDifficulty < 5)
+    if(successfulParse && parsedDifficulty > 0 && parsedDifficulty < 5)
     {
         // Easy gives user eight guesses, Medium gives user six guesses, Hard gives user four guesses.
         // Cheater difficulty gives user 9001 guesses lol
@@ -62,10 +66,11 @@ static void GuessANumber()
             }
 
             //parse user input into integer
-            int parsedInput = int.Parse(userInput);
+            int parsedInput;
+            bool anotherSuccessfulParse = int.TryParse(userInput, out parsedInput);
 
             //check that guess is valid
-            if (parsedInput > 0 && parsedInput < 101) 
+            if (anotherSuccessfulParse && parsedInput > 0 && parsedInput < 101) 
             {
                 //If user guesses correctly
                 if (parsedInput == secretNumber) 
@@ -125,4 +130,14 @@ static void GuessANumber()
             return;
         }
     }
+
+    //if difficulty selection not valid just relaunch game
+    else
+    {
+        Console.WriteLine();
+        Console.WriteLine("Please enter a valid difficulty between 1 and 4");
+        GuessANumber();
+    }
+
+
 }
